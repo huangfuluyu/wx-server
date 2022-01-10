@@ -1,0 +1,4 @@
+# Project exclude paths
+/wx-auto-response/target/
+*.iml
+.idea
