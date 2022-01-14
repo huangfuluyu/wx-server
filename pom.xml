@@ -16,8 +16,11 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <spring.boot.version>2.1.5.RELEASE</spring.boot.version>
-        <hutool.version>5.7.2</hutool.version>
+        <hutool.all.version>5.7.2</hutool.all.version>
         <fastjson.version>1.2.76</fastjson.version>
+        <fastxml.dataformat.version>2.9.7</fastxml.dataformat.version>
+        <lombok.version>1.18.22</lombok.version>
+        <mybatis.version>2.1.3</mybatis.version>
     </properties>
 
     <repositories>
@@ -42,17 +45,40 @@
                 <version>${spring.boot.version}</version>
             </dependency>
 
+            <!--https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml-->
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>${fastxml.dataformat.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
 
+            <!-- hutool工具 -->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
+                <version>${hutool.all.version}</version>
             </dependency>
+
+            <!-- mybatis -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
