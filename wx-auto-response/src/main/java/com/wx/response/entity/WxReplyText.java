@@ -1,8 +1,7 @@
-package com.wx.response.model;
+package com.wx.response.entity;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JacksonXmlRootElement(localName = "xml")
-public class WxConsumerText {
+public class WxReplyText {
     @JacksonXmlProperty(localName = "ToUserName")
     private String toUserName;
 
