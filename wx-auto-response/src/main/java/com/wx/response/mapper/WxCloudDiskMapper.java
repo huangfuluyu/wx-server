@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 @Component
 public interface WxCloudDiskMapper {
+
+
     /**
      * 根据关键词查询
      *
@@ -31,4 +33,12 @@ public interface WxCloudDiskMapper {
      */
     @Select("select * from wx_cloud_disk where cloud_type = #{cloudType} order by gmt_create Desc limit 5")
     List<WxCloudDisk> listSelectByDataType(Integer cloudType);
+
+    /**
+     * 随机5条数据
+     *
+     * @return 随机5条数据
+     */
+    @Select("select * from wx_cloud_disk order by gmt_create limit 5")
+    List<WxCloudDisk> listSelectTop5();
 }

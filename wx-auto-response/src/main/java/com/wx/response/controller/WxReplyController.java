@@ -72,8 +72,9 @@ public class WxReplyController {
                     params.getToUserName(),
                     String.valueOf(System.currentTimeMillis()),
                     params.getMsgType(),
-                    "\uD83E\uDD76抱歉,暂无该资源。" + "\n" +
-                            "或许你喜欢这些呢？" + "\n"
+                    "\uD83E\uDD76抱歉,暂无该资源..." + "\n" +
+                            "\uD83D\uDC47或许你喜欢" + "\n" + "\n" +
+                            getRandomData()
                     , null
             );
         } else {
@@ -88,26 +89,35 @@ public class WxReplyController {
         }
     }
 
-    public String getRandomData(WxCloudDisk cloudDisk) {
-
-        val list = linkMapper.listSelectByDataType(cloudDisk.getCloudType());
+    public String getRandomData(){
+        val listByType = linkMapper.listSelectTop5();
         StringBuffer sb = new StringBuffer();
         sb.append("\uD83E\uDD29[感谢关注! 感谢分享公众号]\n");
+        return getString(sb, listByType);
 
-        if (list == null) {
+    }
+
+    public String getRandomData(WxCloudDisk cloudDisk) {
+        val listByType = linkMapper.listSelectByDataType(cloudDisk.getCloudType());
+        StringBuffer sb = new StringBuffer();
+        sb.append("\uD83E\uDD29[感谢关注! 感谢分享公众号]\n");
+        if (listByType == null) {
             return "[感谢关注! 感谢分享公众号]\n" +
                     cloudDisk.getCloudTitle() + "\n" +
                     "链接：" + cloudDisk.getCloudLink() + "\n" +
                     "提取码：" + cloudDisk.getCloudCode() + "\n" +
                     "有链接失效请私信！！会及时修正！";
         } else {
-
-            list.forEach(o -> sb.append(o.getCloudTitle()).append("【").append(o.getCloudName()).append("】").append("\n")
-                    .append("链接：").append(o.getCloudLink()).append("\n")
-                    .append("提取码：").append(o.getCloudCode()).append("\n").append("\n"));
-            sb.append("有链接失效请私信！！会及时修正！");
-            return sb.toString();
+            return getString(sb, listByType);
         }
+    }
 
+
+    private String getString(StringBuffer sb, List<WxCloudDisk> listTop) {
+        listTop.forEach(o -> sb.append(o.getCloudTitle()).append("【").append(o.getCloudName()).append("】").append("\n")
+                .append("链接：").append(o.getCloudLink()).append("\n")
+                .append("提取码：").append(o.getCloudCode()).append("\n").append("\n"));
+        sb.append("有链接失效请私信！！会及时修正！");
+        return sb.toString();
     }
 }
