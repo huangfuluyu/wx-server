@@ -1,9 +1,14 @@
 package com.wx.response.controller;
 
+import cn.hutool.core.util.XmlUtil;
 import cn.hutool.crypto.SecureUtil;
+import cn.hutool.json.JSON;
+import cn.hutool.json.XML;
+import com.alibaba.fastjson.JSONObject;
 import com.wx.response.entity.WxCloudDisk;
 import com.wx.response.entity.WxReplyText;
 import com.wx.response.mapper.WxCloudDiskMapper;
+import com.wx.response.util.HttpRequestUtil;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,8 +16,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -60,6 +70,12 @@ public class WxReplyController {
         return "200";
     }
 
+    /**
+     * 回复文本消息
+     *
+     * @param params 微信规定xml格式
+     * @return 回复用户内容
+     */
     @PostMapping(value = "/wechat", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
     public WxReplyText consumeText(@RequestBody WxReplyText params) {
 
@@ -75,7 +91,7 @@ public class WxReplyController {
                     "\uD83E\uDD76抱歉,暂无该资源..." + "\n" +
                             "\uD83D\uDC47或许你喜欢" + "\n" + "\n" +
                             getRandomData()
-                    , null
+                    , null, null
             );
         } else {
             return new WxReplyText(
@@ -84,12 +100,17 @@ public class WxReplyController {
                     String.valueOf(System.currentTimeMillis()),
                     params.getMsgType(),
                     getRandomData(cloudDisk),
-                    null
+                    null, null
             );
         }
     }
 
-    public String getRandomData(){
+    /**
+     * 获取随机数据
+     *
+     * @return String
+     */
+    public String getRandomData() {
         val listByType = linkMapper.listSelectTop5();
         StringBuffer sb = new StringBuffer();
         sb.append("\uD83E\uDD29[感谢关注! 感谢分享公众号]\n");
@@ -97,6 +118,12 @@ public class WxReplyController {
 
     }
 
+    /**
+     * 获取随机数据
+     *
+     * @param cloudDisk 关键词所对应资源
+     * @return String
+     */
     public String getRandomData(WxCloudDisk cloudDisk) {
         val listByType = linkMapper.listSelectByDataType(cloudDisk.getCloudType());
         StringBuffer sb = new StringBuffer();
@@ -113,6 +140,13 @@ public class WxReplyController {
     }
 
 
+    /**
+     * 将列表数据格式化
+     *
+     * @param sb      StringBuffer
+     * @param listTop 列表数据
+     * @return String
+     */
     private String getString(StringBuffer sb, List<WxCloudDisk> listTop) {
         listTop.forEach(o -> sb.append(o.getCloudTitle()).append("【").append(o.getCloudName()).append("】").append("\n")
                 .append("链接：").append(o.getCloudLink()).append("\n")

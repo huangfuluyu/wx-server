@@ -25,6 +25,9 @@ public class WxReplyText {
     @JacksonXmlProperty(localName = "CreateTime")
     private String createTime;
 
+    /**
+     * 消息类型: text,image,event
+     */
     @JacksonXmlProperty(localName = "MsgType")
     private String msgType;
 
@@ -33,5 +36,11 @@ public class WxReplyText {
 
     @JacksonXmlProperty(localName = "MsgId")
     private String msgId;
+
+    /**
+     * 事件推送 subscribe(订阅)、unsubscribe(取消订阅)
+     */
+    @JacksonXmlProperty(localName = "Event")
+    private String event;
 
 }

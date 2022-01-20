@@ -1,11 +1,18 @@
 package com.wx.response.util;
 
 
-
 import com.alibaba.fastjson.JSONObject;
+import com.wx.response.entity.WxReplyText;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.io.StringReader;
 
 /**
  * @author : HuangFu
@@ -17,6 +24,7 @@ public class HttpRequestUtil {
         String json = getRequestJsonString(request);
         return JSONObject.parseObject(json);
     }
+
     /***
      * 获取 request 中 json 字符串的内容
      *
@@ -29,7 +37,7 @@ public class HttpRequestUtil {
         String submitMehtod = request.getMethod();
         // GET
         if (submitMehtod.equals("GET")) {
-            return new String(request.getQueryString().getBytes("iso-8859-1"),"utf-8").replaceAll("%22", "\"");
+            return new String(request.getQueryString().getBytes("iso-8859-1"), "utf-8").replaceAll("%22", "\"");
             // POST
         } else {
             return getRequestPostStr(request);
@@ -41,6 +49,7 @@ public class HttpRequestUtil {
      * <pre>
      * 举例：
      * </pre>
+     *
      * @param request
      * @return
      * @throws IOException
@@ -48,11 +57,11 @@ public class HttpRequestUtil {
     public static byte[] getRequestPostBytes(HttpServletRequest request)
             throws IOException {
         int contentLength = request.getContentLength();
-        if(contentLength<0){
+        if (contentLength < 0) {
             return null;
         }
         byte buffer[] = new byte[contentLength];
-        for (int i = 0; i < contentLength;) {
+        for (int i = 0; i < contentLength; ) {
 
             int readlen = request.getInputStream().read(buffer, i,
                     contentLength - i);
@@ -69,6 +78,7 @@ public class HttpRequestUtil {
      * <pre>
      * 举例：
      * </pre>
+     *
      * @param request
      * @return
      * @throws IOException
