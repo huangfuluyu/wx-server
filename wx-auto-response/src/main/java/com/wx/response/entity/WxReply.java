@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JacksonXmlRootElement(localName = "xml")
-public class WxReplyText {
+public class WxReply {
     @JacksonXmlProperty(localName = "ToUserName")
     private String toUserName;
 

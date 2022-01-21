@@ -2,17 +2,9 @@ package com.wx.response.util;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.wx.response.entity.WxReplyText;
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.io.StringReader;
 
 /**
  * @author : HuangFu

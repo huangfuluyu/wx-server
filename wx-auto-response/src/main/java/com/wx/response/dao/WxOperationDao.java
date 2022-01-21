@@ -1,6 +1,7 @@
 package com.wx.response.dao;
 
-import com.wx.response.entity.WxReplyText;
+import com.wx.response.entity.WxReply;
+import org.springframework.stereotype.Component;
 
 /**
  * @author : HuangFu
@@ -9,9 +10,11 @@ import com.wx.response.entity.WxReplyText;
  **/
 public interface WxOperationDao {
     /**
-     * 回复文本消息
+     * 回复用户消息
      *
+     * @param replyText replyText
      * @return WxReplyText
      */
-    WxReplyText replyTextMsg(WxReplyText replyText);
+    WxReply replyMsg(WxReply replyText);
+
 }
